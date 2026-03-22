@@ -1,6 +1,6 @@
 #!/bin/python
 """
-Goal of program: Satisfy the requirements of Part 1 and Part 2 of Critical Thinking Assignemnt for Module 1 of CSC500
+Goal of program: Satisfy the requirements of Part 1 and Part 2 of Critical Thinking Assignment for Module 1 of CSC500
 """
 #Version 1.0.0
 
