@@ -23,8 +23,8 @@ DEFINE FUNCTION part_func(num1, num2)
     TRY_CODE
         DISPLAY "PART1: Numbers provided for num1 and num2"
 
-        SET res1 = num1 * num2      //Multiplication
-        SET res2 = num1 / num2      //Division
+        SET res1 = num1 + num2      //Addition
+        SET res2 = num1 - num2      //Subtraction
 
         RETURN res1, res2
 
@@ -40,8 +40,8 @@ DEFINE FUNCTION main()
 
         SET res1, res2 = CALL part_func(num1, num2)
 
-        DISPLAY "Results of Multiplication: " + res1
-        DISPLAY "Results of Division: " + res2
+        DISPLAY "Results of Addition: " + res1
+        DISPLAY "Results of Subtraction: " + res2
     ON_ERROR
         CONTINUE_TO_NEXT_LINE
 END FUNCTION
