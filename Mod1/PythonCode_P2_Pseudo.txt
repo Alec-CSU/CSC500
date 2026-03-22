@@ -1,0 +1,51 @@
+START PROGRAM
+
+DEFINE FUNCTION grab_inputs()
+    TRY_CODE
+        //Collect Inputs
+        DISPLAY "INPUT desired number for num1: "
+        INPUT num1
+        CONVERT num1 TO INTEGER
+
+        DISPLAY "INPUT desired number for num2: "
+        INPUT num2
+        CONVERT num2 TO INTEGER
+
+        RETURN num1, num2
+
+    ON_ERROR
+        DISPLAY "INPUTS was not accepted, try again."
+        CALL main()
+END FUNCTION
+
+//Part 2
+DEFINE FUNCTION part_func(num1, num2)
+    TRY_CODE
+        DISPLAY "PART2: Numbers provided for num1 and num2"
+
+        SET res1 = num1 * num2      //Multiplication
+        SET res2 = num1 / num2      //Division
+
+        RETURN res1, res2
+
+    ON_ERROR 
+        DISPLAY "INPUTS was not accepted, try again."
+        CALL main()
+END FUNCTION
+
+//Main
+DEFINE FUNCTION main()
+    TRY_CODE
+        SET num1, num2 = CALL grab_inputs()
+
+        SET res1, res2 = CALL part_func(num1, num2)
+
+        DISPLAY "Results of Multiplication: " + res1
+        DISPLAY "Results of Division: " + res2
+    ON_ERROR
+        CONTINUE_TO_NEXT_LINE
+END FUNCTION
+
+CALL main()
+
+END PROGRAM
