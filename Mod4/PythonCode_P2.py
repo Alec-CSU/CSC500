@@ -23,7 +23,7 @@ def grab_item_input(item_number:int):
 def main():
     #Grabs 2 items
     items = list()
-    for item_number in range(1,5): #Change the number to change how many items to collect
+    for item_number in range(1,3): #Change the number to change how many items to collect
         item = grab_item_input(item_number)
         items.append(item)
     
