@@ -12,7 +12,8 @@ points_map = {
     0: 0,
     2: 5,
     4: 15,
-    6: 30
+    6: 30,
+    8: 60
 }
 
 #Points Awarded
