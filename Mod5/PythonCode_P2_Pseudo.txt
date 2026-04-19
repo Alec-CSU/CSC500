@@ -1,0 +1,22 @@
+START
+
+#Input of Current and Wait Time
+DECLARE var_current_time AS integer
+DECLARE var_wait_time AS integer
+DECLARE var_alarm_time AS integer
+
+PRINT "Enter current time in Hours:: "
+INPUT var_current_time
+
+PRINT "Enter time till the alarm goes off:: "
+INPUT var_wait_time
+
+#Alarm Calculations
+SET var_alarm_time = (var_current_time + var_wait_time) MOD 24
+
+#Print Section
+PRINT "Current Time: ", FORMAT(var_current_time, "2", LEFT OF Decimal), ":00"
+PRINT "Wait Time: ", var_wait_time, " hours"
+PRINT "Alarm Time: ", FORMAT(var_alarm_time, "2", LEFT OF Decimal), ":00"
+
+END

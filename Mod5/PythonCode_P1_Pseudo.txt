@@ -1,0 +1,43 @@
+START
+
+#Num of Years
+DECLARE var_number_of_years AS integer
+PRINT "Enter the # of years:: "
+INPUT var_number_of_years
+
+#Rainfall Holding Vars
+DECLARE var_total_rainfall AS float
+SET var_total_rainfall = 0.0
+
+DECLARE var_total_months AS integer
+SET var_total_months = 0
+
+#Outer Loop (Years)
+DECLARE var_current_year AS integer
+FOR var_current_year = 0 TO var_number_of_years - 1
+
+    #Inner Loop (Months)
+    DECLARE var_current_month AS integer
+    FOR var_current_month = 0 TO 11
+
+        DECLARE var_monthly_rainfall AS float
+        PRINT "\tEnter rainfall for the Year ", var_current_year + 1, ", Month ", var_current_month + 1, " in inches:\t"
+        INPUT var_monthly_rainfall
+
+        SET var_total_rainfall = var_total_rainfall + var_monthly_rainfall
+        SET var_total_months = var_total_months + 1
+
+    END FOR
+
+END FOR
+
+#Rainfall Calc
+DECLARE var_average_rainfall AS float
+SET var_average_rainfall = var_total_rainfall / var_total_months
+
+#Print to User
+PRINT "Num of Months:   ", var_total_months
+PRINT "Total Rainfall:  ", var_total_rainfall, "inches"
+PRINT "Average Rainfall:", var_average_rainfall, "inches"
+
+END
