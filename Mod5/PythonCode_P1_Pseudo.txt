@@ -2,7 +2,7 @@ START
 
 #Num of Years
 DECLARE var_number_of_years AS integer
-PRINT "Enter the # of years:: "
+PRINT "Enter the # of years: "
 INPUT var_number_of_years
 
 #Rainfall Holding Vars

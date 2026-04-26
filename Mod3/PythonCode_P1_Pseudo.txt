@@ -11,14 +11,14 @@ DECLARE var_tip_amount AS float
 DECLARE var_tax_amount AS float
 DECLARE var_total_cost AS float
 
-SET var_tax_amount = var_food_cost * 0.0643
-SET var_tip_amount = var_food_cost * 0.15
-SET var_total_cost = var_food_cost + tip_amount + tax_amount
+SET var_tax_amount = var_food_cost * 0.07
+SET var_tip_amount = var_food_cost * 0.18
+SET var_total_cost = var_food_cost + var_tax_amount + var_tip_amount
 
 #Print Section
 PRINT "Food Cost: $", DISPLAY(var_food_cost, 2) #Displays upto 2nd Decimal Place
-PRINT "Tip (15%): $", DISPLAY(var_tip_amount, 2) #Displays upto 2nd Decimal Place
-PRINT "Tax (6.43%): $", DISPLAY(var_tax_amount, 2) #Displays upto 2nd Decimal Place
+PRINT "Tax (7%): $", DISPLAY(var_tax_amount, 2) #Displays upto 2nd Decimal Place
+PRINT "Tip (18%): $", DISPLAY(var_tip_amount, 2) #Displays upto 2nd Decimal Place
 PRINT "Total Cost: $", DISPLAY(var_total_cost, 2) #Displays upto 2nd Decimal Place
 
 END

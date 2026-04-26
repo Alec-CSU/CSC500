@@ -1,3 +1,9 @@
+#!/bin/python
+"""
+Program objective: Determine the total cost of a meal which includes tipping 18 percent and a sales tax of 7 percent.
+"""
+#Version 1.0.0
+
 #Input of Meal Cost
 food_cost = float(input("Enter cost of Meal:: "))
 

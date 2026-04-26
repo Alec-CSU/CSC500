@@ -23,7 +23,7 @@ for current_year in range(0, number_of_years):
 #Rainfall Calc
 average_rainfall = total_rainfall / total_months
 
-#Print to User
+#Print Points Awarded
 print("Num of Months:   ", total_months)
 print("Total Rainfall:  ", round(total_rainfall, 2), "inches")
 print("Average Rainfall:", round(average_rainfall, 2), "inches")
