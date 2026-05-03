@@ -1,0 +1,46 @@
+START
+
+DECLARE dictionary:COURSE_ROOMS
+IN COURSE_ROOMS{
+    SET CSC101 to 3004
+    SET CSC102 to 4501
+    SET CSC103 to 6755
+    SET NET110 to 1244
+    SET COM241 to 1411
+}
+
+DECLARE dictionary:COURSE_INSTRUCTORS
+IN COURSE_INSTRUCTORS{
+    SET CSC101 to Haynes
+    SET CSC102 to Alvarado
+    SET CSC103 to Rich
+    SET NET110 to Burke
+    SET COM241 to Lee
+}
+
+DECLARE dictionary:COURSE_TIMES
+IN COURSE_TIMES{
+    SET CSC101 to 8:00 a.m.
+    SET CSC102 to 9:00 a.m.
+    SET CSC103 to 10:00 a.m.
+    SET NET110 to 11:00 a.m.
+    SET COM241 to 1:00 p.m.
+}
+
+DISPLAY user to "Enter course number:"
+DECLARE user_course
+SET user_course as INPUT
+UPERCASE user_course
+
+IF user_course exists in COURSE_ROOMS THEN
+    DISPLAY course information header
+    DISPLAY Course Number, Instructor, Meeting Time, and Room Number columns
+    DISPLAY user_course
+    DISPLAY instructor from COURSE_INSTRUCTORS
+    DISPLAY meeting time from COURSE_TIMES
+    DISPLAY room number from COURSE_ROOMS
+ELSE
+    DISPLAY course not found message
+END IF
+
+END
