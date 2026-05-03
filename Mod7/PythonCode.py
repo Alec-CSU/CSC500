@@ -1,6 +1,6 @@
 #!/bin/python
 """
-Goal of program: Develop dictionaries with course room numbers, course instructors, and course meeting times. To meet Module 6 Requirements, the program will require the user to provide a course number, and will subsequently show the corresponding course information.
+Goal of program: Develop dictionaries with course room numbers, course instructors, and course meeting times. To meet Module 7 Requirements, the program will require the user to provide a course number, and will subsequently show the corresponding course information.
 """
 #Version 1.0.0
 
