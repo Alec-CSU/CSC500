@@ -1,0 +1,217 @@
+START
+
+#Import Section
+IMPORT os
+IMPORT time
+IMPORT ItemToPurchase, ShoppingCart FROM PythonCode_P1
+
+
+#Clear Screen
+DECLARE FUNCTION clear_screen()
+
+    WAIT 2 SECONDS
+
+    IF operating system == "Windows" THEN
+
+        CLEAR SCREEN USING "cls"
+
+    ELSE
+
+        CLEAR SCREEN USING "clear"
+
+    END IF
+
+END FUNCTION
+
+
+#Get Float Input
+DECLARE FUNCTION get_float_input(inp AS string) RETURNS float
+
+    WHILE TRUE
+
+        TRY
+
+            PRINT inp
+            INPUT var_float_input
+            RETURN var_float_input AS float
+
+        EXCEPT
+
+            PRINT "Invalid input. Please enter a valid number."
+
+        END TRY
+
+    END WHILE
+
+END FUNCTION
+
+
+#Get Integer Input
+DECLARE FUNCTION get_int_input(inp AS string) RETURNS integer
+
+    WHILE TRUE
+
+        TRY
+
+            PRINT inp
+            INPUT var_int_input
+            RETURN var_int_input AS integer
+
+        EXCEPT
+
+            PRINT "Invalid input. Please enter a valid whole number."
+
+        END TRY
+
+    END WHILE
+
+END FUNCTION
+
+
+#Print Menu
+DECLARE FUNCTION print_menu(cart AS ShoppingCart)
+
+    DECLARE inp AS string
+    SET inp = ""
+
+    WHILE inp != "q"
+
+        PRINT "MENU"
+        PRINT "a - Add item to cart"
+        PRINT "r - Remove item from cart"
+        PRINT "c - Change item quantity"
+        PRINT "i - Output items' descriptions"
+        PRINT "o - Output shopping cart"
+        PRINT "q - Quit"
+
+        PRINT "Choose an option:"
+        INPUT inp
+        SET inp = inp LOWERCASE
+
+        #Invalid Option
+        WHILE inp NOT IN ["a", "r", "c", "i", "o", "q"]
+
+            PRINT "Choose an option:"
+            INPUT inp
+            SET inp = inp LOWERCASE
+
+        END WHILE
+
+        #Add Item
+        IF inp == "a" THEN
+
+            PRINT "ADD ITEM TO CART"
+
+            DECLARE item_name AS string
+            DECLARE item_description AS string
+            DECLARE item_price AS float
+            DECLARE item_quantity AS integer
+
+            PRINT "Enter the item name:"
+            INPUT item_name
+
+            PRINT "Enter the item description:"
+            INPUT item_description
+
+            SET item_price = CALL get_float_input("Enter the item price:")
+
+            SET item_quantity = CALL get_int_input("Enter the item quantity:")
+
+            DECLARE var_item AS ItemToPurchase
+            SET var_item = NEW ItemToPurchase(item_name, item_description, item_price, item_quantity)
+
+            CALL cart.add_item(var_item)
+
+            CALL clear_screen()
+
+        #Remove Item
+        ELSE IF inp == "r" THEN
+
+            PRINT "REMOVE ITEM FROM CART"
+
+            DECLARE item_name AS string
+
+            PRINT "Enter name of item to remove:"
+            INPUT item_name
+
+            CALL cart.remove_item(item_name)
+
+            CALL clear_screen()
+
+        #Change Item Quantity
+        ELSE IF inp == "c" THEN
+
+            PRINT "CHANGE ITEM QUANTITY"
+
+            DECLARE item_name AS string
+            DECLARE item_quantity AS integer
+
+            PRINT "Enter the item name:"
+            INPUT item_name
+
+            SET item_quantity = CALL get_int_input("Enter the new quantity:")
+
+            DECLARE var_item AS ItemToPurchase
+            SET var_item = NEW ItemToPurchase(item_name = item_name, item_quantity = item_quantity)
+
+            CALL cart.modify_item(var_item)
+
+            CALL clear_screen()
+
+        #Output Item Descriptions
+        ELSE IF inp == "i" THEN
+
+            PRINT "OUTPUT ITEMS' DESCRIPTIONS"
+
+            CALL cart.print_descriptions()
+
+            CALL clear_screen()
+
+        #Output Shopping Cart
+        ELSE IF inp == "o" THEN
+
+            PRINT "OUTPUT SHOPPING CART"
+
+            CALL cart.print_total()
+
+            CALL clear_screen()
+
+        #Quit
+        ELSE IF inp == "q" THEN
+
+            CALL clear_screen()
+            RETURN
+
+        END IF
+
+    END WHILE
+
+END FUNCTION
+
+
+#MAIN
+DECLARE FUNCTION main()
+
+    DECLARE customer_name AS string
+    DECLARE current_date AS string
+
+    PRINT "Enter customer's name:"
+    INPUT customer_name
+
+    PRINT "Enter today's date:"
+    INPUT current_date
+
+    PRINT "Customer name: ", customer_name
+    PRINT "Today's date: ", current_date
+
+    DECLARE cart AS ShoppingCart
+    SET cart = NEW ShoppingCart(customer_name, current_date)
+
+    CALL print_menu(cart)
+
+END FUNCTION
+
+
+CALL main()
+
+END

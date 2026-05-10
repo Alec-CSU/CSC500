@@ -1,0 +1,225 @@
+START
+
+#ItemToPurchase Class
+DECLARE CLASS ItemToPurchase
+
+    #Default Constructor
+    DECLARE FUNCTION __init__(item_name AS string, item_description AS string, item_price AS float, item_quantity AS integer)
+
+        SET self.item_name = item_name
+        SET self.item_description = item_description
+        SET self.item_price = ROUND(item_price, 2)
+        SET self.item_quantity = item_quantity
+        SET self.hash = HASH(item_name UPPERCASE, item_description UPPERCASE)
+
+    END FUNCTION
+
+    #Print Item Cost
+    DECLARE FUNCTION print_item_cost()
+
+        DECLARE var_item_total AS float
+        SET var_item_total = self.item_price * self.item_quantity
+
+        PRINT self.item_name, self.item_quantity, " @ $", self.item_price, " = $", var_item_total
+
+    END FUNCTION
+
+    #Print Item Description
+    DECLARE FUNCTION print_item_description()
+
+        PRINT self.item_name, ": ", self.item_description
+
+    END FUNCTION
+
+END CLASS
+
+
+#ShoppingCart Class
+DECLARE CLASS ShoppingCart
+
+    #Default Constructor
+    DECLARE FUNCTION __init__(customer_name AS string, current_date AS string)
+
+        SET self.customer_name = customer_name
+        SET self.current_date = current_date
+        SET self.cart_items = EMPTY LIST
+
+    END FUNCTION
+
+    #Add Item
+    DECLARE FUNCTION add_item(item AS ItemToPurchase)
+
+        DECLARE var_index AS integer
+
+        FOR var_index = 0 TO LENGTH(self.cart_items) - 1
+
+            IF self.cart_items[var_index].hash == item.hash AND self.cart_items[var_index].item_price == item.item_price THEN
+
+                SET self.cart_items[var_index].item_quantity = self.cart_items[var_index].item_quantity + item.item_quantity
+                RETURN
+
+            END IF
+
+        END FOR
+
+        ADD item TO self.cart_items
+
+    END FUNCTION
+
+    #Remove Item
+    DECLARE FUNCTION remove_item(item_name AS string)
+
+        DECLARE var_count_items AS integer
+        SET var_count_items = LENGTH(self.cart_items)
+
+        IF var_count_items > 0 THEN
+
+            DECLARE var_index AS integer
+
+            FOR var_index = 0 TO var_count_items - 1
+
+                IF self.cart_items[var_index].item_name UPPERCASE == item_name UPPERCASE THEN
+
+                    REMOVE self.cart_items[var_index]
+                    RETURN
+
+                END IF
+
+            END FOR
+
+            PRINT "Item not found in cart. Nothing removed."
+
+        ELSE
+
+            PRINT "Item not found in cart. Nothing removed."
+
+        END IF
+
+    END FUNCTION
+
+    #Modify Item
+    DECLARE FUNCTION modify_item(item AS ItemToPurchase)
+
+        DECLARE var_count_items AS integer
+        SET var_count_items = LENGTH(self.cart_items)
+
+        IF var_count_items > 0 THEN
+
+            DECLARE var_index AS integer
+
+            FOR var_index = 0 TO LENGTH(self.cart_items) - 1
+
+                IF self.cart_items[var_index].item_name UPPERCASE == item.item_name UPPERCASE THEN
+
+                    IF item.item_description != "none" THEN
+                        SET self.cart_items[var_index].item_description = item.item_description
+                    END IF
+
+                    IF item.item_price != 0.0 THEN
+                        SET self.cart_items[var_index].item_price = item.item_price
+                    END IF
+
+                    IF item.item_quantity != 0 THEN
+                        SET self.cart_items[var_index].item_quantity = item.item_quantity
+                    END IF
+
+                    RETURN
+
+                END IF
+
+            END FOR
+
+            PRINT "Item not found in cart. Nothing modified."
+
+        ELSE
+
+            PRINT "Item not found in cart. Nothing modified."
+
+        END IF
+
+    END FUNCTION
+
+    #Get Number of Items in Cart
+    DECLARE FUNCTION get_num_items_in_cart() RETURNS integer
+
+        DECLARE var_total_items AS integer
+        SET var_total_items = 0
+
+        DECLARE var_item AS ItemToPurchase
+
+        FOR EACH var_item IN self.cart_items
+
+            SET var_total_items = var_total_items + var_item.item_quantity
+
+        END FOR
+
+        RETURN var_total_items
+
+    END FUNCTION
+
+    #Get Cost of Cart
+    DECLARE FUNCTION get_cost_of_cart() RETURNS float
+
+        DECLARE var_total_cost AS float
+        SET var_total_cost = 0.0
+
+        DECLARE var_item AS ItemToPurchase
+
+        FOR EACH var_item IN self.cart_items
+
+            SET var_total_cost = var_total_cost + (var_item.item_price * var_item.item_quantity)
+
+        END FOR
+
+        RETURN var_total_cost
+
+    END FUNCTION
+
+    #Print Total
+    DECLARE FUNCTION print_total()
+
+        PRINT self.customer_name, "'s Shopping Cart - ", self.current_date
+
+        DECLARE var_total_items AS integer
+        SET var_total_items = CALL get_num_items_in_cart()
+
+        PRINT "Number of Items: ", var_total_items
+
+        IF var_total_items <= 0 THEN
+
+            PRINT "SHOPPING CART IS EMPTY"
+            RETURN
+
+        END IF
+
+        DECLARE var_item AS ItemToPurchase
+
+        FOR EACH var_item IN self.cart_items
+
+            CALL var_item.print_item_cost()
+
+        END FOR
+
+        PRINT "Total: $", CALL get_cost_of_cart()
+
+    END FUNCTION
+
+    #Print Descriptions
+    DECLARE FUNCTION print_descriptions()
+
+        PRINT self.customer_name, "'s Shopping Cart - ", self.current_date
+        PRINT "Item Descriptions"
+
+        DECLARE var_item AS ItemToPurchase
+
+        FOR EACH var_item IN self.cart_items
+
+            CALL var_item.print_item_description()
+
+        END FOR
+
+    END FUNCTION
+
+END CLASS
+
+END
